@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width"/>
+    <title>Ember App 1</title>
+    <link rel="stylesheet" href="components/bootstrap.css/css/bootstrap.css"/>
+    <link rel="stylesheet" href="components/bootstrap.css/css/bootstrap-responsive.css"/>
+    <link rel="stylesheet" href="assets/css/style.css"/>
+</head>
+<body class="antialised">
+
+<script type="text/x-handlebars" data-template-name="application">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+
+                <ul class="nav">
+                    <li>{{#linkTo index classNames="brand"}}
+                        {{App.name}}{{/linkTo}}
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>{{#linkTo profile}}My profile{{/linkTo}}</li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-search pull-right" action="">
+                    <input type="text" class="search-query span5" placeholder="Search">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container page">
+        {{outlet}}
+    </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="needs">
+    <ul class="nav nav-pills">
+        <li>{{#linkTo needs.bydate}}Newest{{/linkTo}}</li>
+
+        <li>{{#linkTo needs.bypopularity}}Most popular{{/linkTo}}</li>
+    </ul>
+    {{outlet}}
+    <hr/>
+    <button class="btn-success btn-large"
+    {{action alert}} >{{buttonCaption}}</button>
+</script>
+
+<script type="text/x-handlebars" data-template-name="needsList">
+    <ul class="nav nav-list shadow-box affix-top items">
+        {{#each item in model}}
+        <li>
+            {{#linkTo needs.detail item}}
+                {{item.title}}
+            <i class="icon-thumbs-up pull-right" {{action alert bubbles=false}}></i>
+            {{/linkTo}}
+        </li>
+        {{/each}}
+</script>
+
+<script type="text/x-handlebars" data-template-name="profile">
+    profile
+    <h1>{{name}}</h1>
+    Age: {{age}}
+</script>
+
+<script type="text/x-handlebars" data-template-name="need">
+    <h2>{{title}}</h2>
+
+    <p>{{desc}}</p>
+</script>
+
+<script src="components/jquery/jquery.js"></script>
+<script src="components/handlebars/handlebars.js"></script>
+<script src="components/ember/ember.js"></script>
+<script src="components/moment/moment.js"></script>
+<script src="components/bootstrap.css/js/bootstrap.min.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
