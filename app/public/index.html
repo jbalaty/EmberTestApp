@@ -25,6 +25,7 @@
                             <li>{{#linkTo profile}}My profile{{/linkTo}}</li>
                         </ul>
                     </li>
+                    <li>{{#linkTo profile}}My profile{{/linkTo}}</li>
                 </ul>
                 <form class="navbar-search pull-right" action="">
                     <input type="text" class="search-query span5" placeholder="Search">
@@ -38,11 +39,6 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="needs">
-    <ul class="nav nav-pills">
-        <li>{{#linkTo needs.bydate}}Newest{{/linkTo}}</li>
-
-        <li>{{#linkTo needs.bypopularity}}Most popular{{/linkTo}}</li>
-    </ul>
     {{outlet}}
     <hr/>
     <button class="btn-success btn-large"
@@ -50,24 +46,33 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="needsList">
+    <ul class="nav nav-pills">
+        <li>{{#linkTo needs.bydate}}Newest{{/linkTo}}</li>
+
+        <li>{{#linkTo needs.bypopularity}}Most popular{{/linkTo}}</li>
+    </ul>
     <ul class="nav nav-list shadow-box affix-top items">
         {{#each item in model}}
         <li>
             {{#linkTo needs.detail item}}
-                {{item.title}}
-            <i class="icon-thumbs-up pull-right" {{action alert bubbles=false}}></i>
+            {{item.title}}
+            <div class="pull-right" style="white-space:nowrap;">
+                <i class="icon-thumbs-up" {{action thumbsUp item bubbles=false}}></i>
+                <span {{bindAttr class=":badge item.thumbsClass"}}>{{item.thumbsCount}}</span>
+                &nbsp;
+            </div>
             {{/linkTo}}
         </li>
         {{/each}}
+    </ul>
 </script>
 
 <script type="text/x-handlebars" data-template-name="profile">
-    profile
     <h1>{{name}}</h1>
     Age: {{age}}
 </script>
 
-<script type="text/x-handlebars" data-template-name="need">
+<script type="text/x-handlebars" data-template-name="needs/detail">
     <h2>{{title}}</h2>
 
     <p>{{desc}}</p>

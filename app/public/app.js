@@ -8,7 +8,7 @@
 var App = Ember.Application.create({
     LOG_TRANSITIONS: true
 });
-App.name = "Hearth";
+App.name = "EmberApp";
 
 App.Router.map(function () {
     // put your routes here
@@ -17,16 +17,16 @@ App.Router.map(function () {
         //this.route('detail', {path: '/profile/:profile_id'});
     });
     this.resource('needs', {path: '/needs' }, function () {
-        this.route('bydate',{path:'/newest'});
-        this.route('bypopularity',{path:'/mostpopular'});
-        this.route('detail',{path:'/:need_id'});
+        this.route('bydate', {path: 'latest'});
+        this.route('bypopularity', {path: 'mostpopular'});
+        this.route('detail', {path: ':need_id'});
     });
 });
 
 /*Ember.LinkView.reopen({
-   "data-toggle":'dropdown',
-   attributeBindings:['href','title','data-toggle']
-});*/
+ "data-toggle":'dropdown',
+ attributeBindings:['href','title','data-toggle']
+ });*/
 
 App.ApplicationController = Ember.Controller.extend({
 
@@ -36,26 +36,22 @@ App.ApplicationRoute = Ember.Route.extend({
 });
 
 App.Needs = [
-    {id: 0, title: 'Odvoz odpadu z farmy Bertranka',desc:'lorem ipsum'},
-    {id: 1, title: 'Posekání zahrady',desc:'asdf asdf asd sd asdf'},
-    {id: 2, title: 'Výměna píchnutého kola',desc:'asdf asd fasd fasdf asd asd fasdf '}
+    {id: 0, title: 'Odvoz odpadu z farmy Bertranka', desc: 'lorem ipsum', thumbsCount: 0},
+    {id: 1, title: 'Posekání zahrady', desc: 'asdf asdf asd sd asdf', thumbsCount: 0},
+    {id: 2, title: 'Výměna píchnutého kola', desc: 'asdf asd fasd fasdf asd asd fasdf', thumbsCount: 0},
+    {id: 3, title: 'Vyvenčít poníka', desc: 'asdf asd fasd fasdf asd asd fasdf', thumbsCount: 0}
 ];
 
+
 App.IndexRoute = Ember.Route.extend({
-    model: function () {
-        return App.Needs
-    },
-    setupController: function (controller) {
-        controller.buttonCaption = 'alert';
-        controller.alert = function (param) {
-            alert('IndexController alert!');
-            controller.set('buttonCaption', 'green');
-        }
-    },
-    redirect: function() {
+    redirect: function () {
         this.transitionTo('needs.bydate');
     }
 });
+
+// #################################
+// PROFILE START
+// #################################
 
 App.ProfileRoute = Ember.Route.extend({
     model: function () {
@@ -66,19 +62,27 @@ App.ProfileRoute = Ember.Route.extend({
 App.ProfileIndexController = Ember.ObjectController.extend({
     age: function () {
         var bd = moment(this.get('birthDate'));
-        return moment().diff(bd,'years');
+        return moment().diff(bd, 'years');
     }.property('birthDate')
 });
+// #################################
 
-App.NeedsIndexRoute = Ember.Route.extend({
-    redirect: function() {
-        this.transitionTo('needs.bydate');
-    }
-});
 
-App.NeedsIndexRoute = Ember.Route.extend({
-    redirect: function() {
-        this.transitionTo('needs.bydate');
+// #################################
+// NEEDS START
+// #################################
+App.NeedsRoute = Ember.Route.extend({
+    setupController: function (controller) {
+        controller.set('buttonCaption', 'alert');
+        controller.alert = function (param) {
+            alert('Controller alert!');
+            controller.set('buttonCaption', 'green');
+        }
+    },
+    events: {
+        alert: function (param) {
+            thumbsUp('NeedsRoute thumbsUp!');
+        }
     }
 });
 
@@ -88,25 +92,45 @@ App.NeedsDetailRoute = Ember.Route.extend({
     }
 });
 
-App.NeedsBydateRoute = Ember.Route.extend({
+
+var NeedsByRoute = Ember.Route.extend({
     model: function (params) {
         return App.Needs;
     },
-    renderTemplate: function() {
+    renderTemplate: function () {
         this.render('needsList');
     },
-    activate: function() {
+    activate: function () {
+        $(document).attr('title', 'Needs by date');
+    },
+    events: {
+        alert: function (param) {
+            alert('NeedsBydateRoute thumbsUp!');
+        }
+    },
+    setupController: function (controller, model) {
+        controller.thumbsUp = function (item) {
+            Ember.set(item, 'thumbsCount', Ember.get(item, 'thumbsCount') + 1);
+            if (item.thumbsCount >= 20) return Ember.set(item, 'thumbsClass', 'badge-info');
+            else if (item.thumbsCount >= 10) return Ember.set(item, 'thumbsClass', 'badge-warning');
+            else if (item.thumbsCount >= 5) return Ember.set(item, 'thumbsClass', 'badge-important');
+            else if (item.thumbsCount >= 1) return Ember.set(item, 'thumbsClass', 'badge-success');
+            else return Ember.set(item, 'thumbsClass', null);
+        };
+    }
+});
+
+App.NeedsBydateRoute = NeedsByRoute.extend({
+    activate: function () {
         $(document).attr('title', 'Needs by date');
     }
 });
-App.NeedsBypopularityRoute = Ember.Route.extend({
+App.NeedsBypopularityRoute = NeedsByRoute.extend({
     model: function (params) {
         return App.Needs.copy().reverse();
     },
-    renderTemplate: function() {
-        this.render('needsList');
-    },
-    activate: function() {
+    activate: function () {
         $(document).attr('title', 'Needs by popularity');
     }
 });
+// #################################
