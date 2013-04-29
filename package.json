@@ -1,0 +1,20 @@
+{
+  "name": "EmberTestApp",
+  "version": "0.0.0",
+  "description": "Ember test application",
+  "main": "app/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jbalaty/EmberTestApp.git"
+  },
+  "author": "Jiri Balaty",
+  "license": "BSD",
+  "devDependencies": {
+    "grunt": "latest",
+    "grunt-contrib-connect": "latest",
+    "grunt-contrib-watch": "latest"
+  }
+}

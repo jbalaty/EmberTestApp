@@ -1,0 +1,7 @@
+{
+  "name": "public",
+  "version": "0.0.0",
+  "dependencies": {
+    "fastclick": "~0.6.5"
+  }
+}

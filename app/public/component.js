@@ -6,6 +6,7 @@
 		"handlebars":"latest",
 		"ember":"latest",
 		"ember-data":"latest",
-		"moment":"latest"
+		"moment":"latest",
+		"fastclick":"latest"
 	}
 }
