@@ -18,6 +18,6 @@
     "grunt-contrib-watch": "latest"
   },
   "dependencies": {
-    "connect": "~2.7.9"
+    "express": "~3.2.4"
   }
 }
