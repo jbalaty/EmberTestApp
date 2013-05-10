@@ -1,0 +1,13 @@
+{
+  "name": "public",
+  "version": "0.0.0",
+  "dependencies": {
+    "fastclick": "~0.6.5",
+    "jquery": "latest",
+    "handlebars": "latest",
+    "ember": "latest",
+    "ember-data": "latest",
+    "moment": "latest",
+    "bootstrap": "~2.1.1"
+  }
+}

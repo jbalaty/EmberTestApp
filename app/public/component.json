@@ -2,6 +2,12 @@
   "name": "public",
   "version": "0.0.0",
   "dependencies": {
-    "fastclick": "~0.6.5"
+	"fastclick": "~0.6.5",
+	"bootstrap.css": "latest",
+	"jquery":"latest",
+	"handlebars":"latest",
+	"ember":"latest",
+	"ember-data":"latest",
+	"moment":"latest"
   }
 }
