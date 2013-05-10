@@ -16,5 +16,8 @@
     "grunt": "latest",
     "grunt-contrib-connect": "latest",
     "grunt-contrib-watch": "latest"
+  },
+  "dependencies": {
+    "connect": "~2.7.9"
   }
 }
