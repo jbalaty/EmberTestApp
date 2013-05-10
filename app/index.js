@@ -17,7 +17,7 @@ app.configure(function () {
     app.use(express.logger());
 //  app.use(express.bodyParser());
 //  app.use(express.methodOverride());
-    app.use(express.static(path.join(__dirname, '/public')));
+    app.use('/public',express.static(path.join(__dirname, '/public')));
 });
 
 
